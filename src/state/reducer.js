@@ -33,6 +33,9 @@ function reducer(state, action) {
       case actionsTypes.START_GAME:{
         return {...state, gameIsStart:true }
       }
+      case actionsTypes.CHANGE_SQUARE:{
+        return {...state, field:action.payload }
+      }
       default:
         throw new Error();
     }

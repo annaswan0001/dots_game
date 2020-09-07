@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+let set ={"easyMode":{"field":3,"delay":2000},"normalMode":{"field":10,"delay":1000},"hardMode":{"field":15,"delay":900}}
+
 function SettingMode() {
   const classes = useStyles();
   const { state, dispatch } = useContext(GameContext);
@@ -42,8 +45,10 @@ function SettingMode() {
 
   useEffect(() => {
     if(mode){
-      dispatch({type: actionsTypes.SET_FIELD_SIZE, payload: settings[mode].field})
-      dispatch({type: actionsTypes.SET_GAME_DELAY, payload: settings[mode].delay})
+      // dispatch({type: actionsTypes.SET_FIELD_SIZE, payload: settings[mode].field})
+      // dispatch({type: actionsTypes.SET_GAME_DELAY, payload: settings[mode].delay})
+      dispatch({type: actionsTypes.SET_FIELD_SIZE, payload: set[mode].field})
+      dispatch({type: actionsTypes.SET_GAME_DELAY, payload: set[mode].delay})
     }
   }, [mode])
 
@@ -67,12 +72,21 @@ function SettingMode() {
           disabled={gameIsStart}
           onChange={(e) =>setMode(e.target.value)}
         >
-          {state.settings &&
+
+          {/* {state.settings &&
             Object.keys(state.settings).map((set, i) => (
               <MenuItem key={set} value={set}>
                 {set}
               </MenuItem>
+            ))} */}
+
+          {
+            Object.keys(set).map((set, i) => (
+              <MenuItem key={set} value={set}>
+                {set}
+              </MenuItem>
             ))}
+
         </Select>
       </Grid>
       <Grid item lg={4}>

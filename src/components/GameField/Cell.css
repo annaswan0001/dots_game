@@ -1,0 +1,17 @@
+.btn {
+  border: 2px solid #f2f2f3;
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  background-color: #FFFFFF;
+
+}
+.btn-blue {
+  background-color: #5cd8e8;
+}
+.btn-green {
+  background-color: #6ce973;
+}
+.btn-red {
+  background-color: #e85a5f;
+}
