@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   input: {
     padding: "23px 12px 6px",
     minWidth: "145px",
-    textAlign: "left"
+    textAlign: "left",
   },
   label: {
     transform: "translate(12px, 18px) scale(1)",
@@ -38,13 +38,15 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: cyan[900],
     },
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+    },
   },
   buttonDisabled: {
     backgroundColor: "#7B8D93 !important",
     color: "#fff !important",
   },
 }));
-
 
 const createField = (fieldSize) => {
   let fieldArr = [];
@@ -81,15 +83,21 @@ function SettingMode() {
 
   useEffect(() => {
     if (mode) {
-      dispatch({type: actionsTypes.SET_FIELD_SIZE, payload: settings[mode].field})
-      dispatch({type: actionsTypes.SET_GAME_DELAY, payload: settings[mode].delay})
+      dispatch({
+        type: actionsTypes.SET_FIELD_SIZE,
+        payload: settings[mode].field,
+      });
+      dispatch({
+        type: actionsTypes.SET_GAME_DELAY,
+        payload: settings[mode].delay,
+      });
       dispatch({ type: actionsTypes.SET_GAME_PERMISSION });
     }
   }, [mode, dispatch, settings]);
 
   useEffect(() => {
     if (size) {
-      let fieldArray = createField(size)
+      let fieldArray = createField(size);
       dispatch({ type: actionsTypes.SET_FIELD_ARRAY, payload: fieldArray });
     }
   }, [size, dispatch]);
@@ -163,7 +171,7 @@ function SettingMode() {
 
   return (
     <>
-      <Grid item lg={4}>
+      <Grid item xs={12} sm={6}  lg={4}>
         <FormControl variant="filled" className={classes.formControl}>
           <InputLabel classes={{ root: classes.label }} id="select-mode-label">
             Pick game mode
@@ -178,15 +186,15 @@ function SettingMode() {
             onChange={(e) => setMode(e.target.value)}
           >
             {state.settings &&
-            Object.keys(state.settings).map((set, i) => (
-              <MenuItem key={set} value={set}>
-                {set}
-              </MenuItem>
-            ))}
+              Object.keys(state.settings).map((set, i) => (
+                <MenuItem key={set} value={set}>
+                  {set}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
       </Grid>
-      <Grid item lg={4}>
+      <Grid xs={12} sm={6}  item lg={4}>
         <FormControl className={classes.formControl}>
           <TextField
             size="small"
@@ -198,9 +206,9 @@ function SettingMode() {
           />
         </FormControl>
       </Grid>
-      <Grid item container lg={4}>
+      <Grid xs={12} sm={6} md={12} item justify="center" container lg={4}>
         <Button
-          // variant="contained"
+          
           onClick={() => dispatch({ type: actionsTypes.START_GAME })}
           classes={{
             root: classes.button,
@@ -215,11 +223,10 @@ function SettingMode() {
         </Button>
       </Grid>
       <Grid item xs={12}>
-      {winner && <h3 style={{ textAlign: "center" }}> {winner} win! </h3>}
+        {winner && <h3 style={{ textAlign: "center" }}> {winner} win! </h3>}
       </Grid>
     </>
   );
 }
-
 
 export default SettingMode;

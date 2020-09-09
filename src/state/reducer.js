@@ -37,14 +37,12 @@ function reducer(state, action) {
         ...state,
         isGameFinish: true,
         isGameStart: false,
-        isGamePermission: false,
         winner: action.payload,
       };
     }
     case actionsTypes.SET_GAME_PERMISSION: {
       return {
         ...state,
-        isGamePermission: true,
         isGameFinish: false,
         winner: "",
       };

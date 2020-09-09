@@ -13,16 +13,17 @@ import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
 import SettingMode from "./components/SettingMode/SettingMode";
 import Loader from "./components/Loader/Loader";
 
-
-
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
-    padding: theme.spacing(6),
+    padding: theme.spacing(1),
     border: "2px solid #E7E7E9",
     minHeight: "100vh",
     paddingTop: "10%",
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(6),
+    },
   },
-
+ 
 }));
 
 function Game() {
@@ -50,7 +51,6 @@ function Game() {
       .finally(() => setIsLoading(false));
   }, [dispatch]);
 
-  
   // LeaderBoardMemo should rerender only when winners list change
   const LeaderBoardMemo = useMemo(() => {
     return <LeaderBoard winners={winners} />;
@@ -59,7 +59,7 @@ function Game() {
   return (
     <Container maxWidth="xl">
       <main>
-        {isError ? "Something go wrong" : null }
+        {isError ? "Something go wrong" : null}
         {isLoading ? (
           <Loader />
         ) : (
@@ -70,11 +70,18 @@ function Game() {
             alignItems="flex-start"
             spacing={2}
           >
-            <Grid container item spacing={2} alignItems="flex-start" sm={6}>
+            <Grid
+             justify="center"
+              container
+              item
+              spacing={2}
+              alignItems="flex-start"
+              md={6}
+            >
               <SettingMode />
               <GameField />
             </Grid>
-            <Grid container alignItems="center" item sm={6}>
+            <Grid container alignItems="center" item md={6}>
               {LeaderBoardMemo}
             </Grid>
           </Grid>

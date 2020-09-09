@@ -28,3 +28,55 @@
   height: 35px;
 }
 
+
+@media (max-width: 1250.98px) { 
+
+  .btn-medium{
+    width: 35px;
+    height: 35px;
+  }
+  .btn-large{
+    width: 30px;
+    height: 30px;
+  }
+ 
+ 
+ }
+ @media (max-width: 1100px) { 
+
+  .btn-large{
+    width: 25px;
+    height: 25px;
+  }
+ 
+ 
+ }
+@media (max-width: 575.98px) { 
+  .btn-small{
+    width: 45px;
+    height: 45px;
+  }
+  .btn-medium{
+    width: 35px;
+    height: 35px;
+  }
+  .btn-large{
+    width: 20px;
+    height: 20px;
+  }
+ }
+ @media (max-width: 330px) { 
+  .btn-small{
+    width: 35px;
+    height: 35px;
+  }
+  .btn-medium{
+    width: 25px;
+    height: 25px;
+  }
+  .btn-large{
+    width: 17px;
+    height: 17px;
+  }
+ }
+
