@@ -71,6 +71,7 @@ function SettingMode() {
   const [mode, setMode] = useState("");
   const [user, setUserName] = useState("");
 
+
   const {
     settings,
     isGameStart,
@@ -80,6 +81,10 @@ function SettingMode() {
     isGameFinish,
     winner,
   } = state;
+
+  
+ 
+
 
   useEffect(() => {
     if (mode) {
@@ -197,18 +202,19 @@ function SettingMode() {
       <Grid xs={12} sm={6}  item lg={4}>
         <FormControl className={classes.formControl}>
           <TextField
+            error={user.length >= 10 ? true : false}
             size="small"
             label="Enter your name"
             variant="filled"
             onChange={(e) => setUserName(e.target.value)}
             disabled={isGameStart}
             value={user}
+            helperText="Max 10 length"
           />
         </FormControl>
       </Grid>
       <Grid xs={12} sm={6} md={12} item justify="center" container lg={4}>
         <Button
-          
           onClick={() => dispatch({ type: actionsTypes.START_GAME })}
           classes={{
             root: classes.button,
@@ -217,7 +223,7 @@ function SettingMode() {
           }}
           color="primary"
           className={classes.button}
-          disabled={!mode || !user || isGameStart}
+          disabled={!mode || !user || isGameStart || user.length >=10}
         >
           {isGameFinish ? "Play again" : "Play"}
         </Button>
