@@ -42,7 +42,7 @@ function Game() {
         axios.spread((...responses) => {
           const [settings, winners] = responses;
           dispatch({ type: actionsTypes.SET_SETTINGS, payload: settings.data });
-          dispatch({ type: actionsTypes.SET_WINNERS, payload: winners.data });
+          dispatch({ type: actionsTypes.SET_WINNERS, payload: winners.data.reverse() });
         })
       )
       .catch((errors) => {
@@ -58,6 +58,7 @@ function Game() {
 
   return (
     <Container maxWidth="xl">
+      {console.log(state)}
       <main>
         {isError ? "Something go wrong" : null}
         {isLoading ? (
