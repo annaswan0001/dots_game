@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/dots_game/static/css/main.0e67ed66.chunk.css",
-    "main.js": "/dots_game/static/js/main.68186103.chunk.js",
-    "main.js.map": "/dots_game/static/js/main.68186103.chunk.js.map",
+    "main.css": "/dots_game/static/css/main.354c20d5.chunk.css",
+    "main.js": "/dots_game/static/js/main.d08a04e7.chunk.js",
+    "main.js.map": "/dots_game/static/js/main.d08a04e7.chunk.js.map",
     "runtime-main.js": "/dots_game/static/js/runtime-main.0d6fc95d.js",
     "runtime-main.js.map": "/dots_game/static/js/runtime-main.0d6fc95d.js.map",
     "static/js/2.cab6c245.chunk.js": "/dots_game/static/js/2.cab6c245.chunk.js",
     "static/js/2.cab6c245.chunk.js.map": "/dots_game/static/js/2.cab6c245.chunk.js.map",
     "index.html": "/dots_game/index.html",
-    "precache-manifest.42d18f7a957ae718cb5ba26726e9fc41.js": "/dots_game/precache-manifest.42d18f7a957ae718cb5ba26726e9fc41.js",
+    "precache-manifest.2184e52110e61a867eb23ad1f058a4c7.js": "/dots_game/precache-manifest.2184e52110e61a867eb23ad1f058a4c7.js",
     "service-worker.js": "/dots_game/service-worker.js",
-    "static/css/main.0e67ed66.chunk.css.map": "/dots_game/static/css/main.0e67ed66.chunk.css.map",
+    "static/css/main.354c20d5.chunk.css.map": "/dots_game/static/css/main.354c20d5.chunk.css.map",
     "static/js/2.cab6c245.chunk.js.LICENSE.txt": "/dots_game/static/js/2.cab6c245.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0d6fc95d.js",
     "static/js/2.cab6c245.chunk.js",
-    "static/css/main.0e67ed66.chunk.css",
-    "static/js/main.68186103.chunk.js"
+    "static/css/main.354c20d5.chunk.css",
+    "static/js/main.d08a04e7.chunk.js"
   ]
 }
