@@ -58,7 +58,7 @@ function Game() {
 
   return (
     <Container maxWidth="xl">
-      {console.log(state)}
+   
       <main>
         {isError ? "Something go wrong" : null}
         {isLoading ? (
