@@ -1,27 +1,24 @@
-import React , {useContext}from 'react'
+import React from "react";
+import "./LeaderBoard.scss";
+import LeaderList from "./LeaderList";
 import PropTypes from 'prop-types'
-import {GameContext} from '../../state/reducer'
-function LeaderBoard() {
 
-    const { state, dispatch } = useContext(GameContext);
 
-    return (
-        <div>
-            <h2>Leader board</h2>
-            {state.winners && state.winners.map((winner, i)=>{
-                if(winner.winner)
-                 return <div key={winner.id}> 
-                     <span  >{winner.winner}</span>
-                     <span  >{winner.date}</span>
-                 </div>
-            })}
-        </div>
-    )
-}
+const LeaderBoard = ({ winners }) => {
+  return (
+    <div className="leaders">
+      <h1 className="leaders_title">Leader Board</h1>
+      {winners &&
+        winners.map((winner, i) => {
+            return <LeaderList key={winner.id} winner={winner} />;
+        })}
+    </div>
+  );
+};
 
 LeaderBoard.propTypes = {
+    winners: PropTypes.arrayOf(PropTypes.object)
+};
 
-}
-
-export default LeaderBoard
+export default LeaderBoard;
 

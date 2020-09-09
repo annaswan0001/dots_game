@@ -11,8 +11,8 @@ export function getSettings() {
 export function getWinners() {
   return instance.get("/winners");
 }
-export function setWinners(winner) {
-  return instance.post(`/winners`, winner);
+export function setWinner(winner, date) {
+  return instance.post(`/winners`, {winner, date});
 }
 
 export default instance

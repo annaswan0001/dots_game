@@ -1,12 +1,12 @@
-import React, {useContext, useReducer} from "react";
+import React, { useContext, useReducer } from "react";
 import ReactDOM from "react-dom";
-import logger from 'use-reducer-logger';
+import "./index.scss";
 
 //context/reducer
-import {GameContext } from "./state/reducer";
-import reducer from "./state/reducer"
+import { GameContext } from "./state/reducer";
+import reducer from "./state/reducer";
 //component
-import Game from './Game'
+import Game from "./Game";
 
 const App = () => {
   const initialState = useContext(GameContext);
@@ -14,8 +14,7 @@ const App = () => {
 
   return (
     <GameContext.Provider value={{ state, dispatch }}>
-      {console.log(state)}
-        <Game/>
+      <Game />
     </GameContext.Provider>
   );
 };

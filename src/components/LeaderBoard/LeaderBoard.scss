@@ -1,0 +1,24 @@
+.leaders {
+  width: 70%;
+  color: #959595;
+  .leaders_title {
+    margin-bottom: 40px;
+  }
+  .leaders_item {
+    width: 100%;
+    background-color: #cfd8dc;
+    height: 60px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 5px;
+    font-size: 1.4rem;
+    .leaders_item-row {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}

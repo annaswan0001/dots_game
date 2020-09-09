@@ -1,43 +1,52 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import { Grid } from "@material-ui/core";
+//state
 import { GameContext } from "../../state/reducer";
-import Cell from "./Cell";
 import { actionsTypes } from "../../state/actionsTypes";
+//components
+import Cell from "./Cell";
 
 function GameField() {
   const { state, dispatch } = useContext(GameContext);
   const { size, field } = state;
 
-  const handleCkickSquare = (index) => {
-
-    const fieldCopy = [...field];
-    
-    if (fieldCopy[index].isBlueSquare) {
-      fieldCopy[index].isBlueSquare = false;
-      fieldCopy[index].isGreenSquare = true;
-      fieldCopy[index].disabled = true;
-      dispatch({ type: actionsTypes.CHANGE_SQUARE, payload: fieldCopy });
-    }
-  };
+  const handleCkickSquare = useCallback(
+    (index) => {
+      dispatch({ type: actionsTypes.CLICK_SQUARE, payload: index });
+    },
+    [dispatch]
+  );
 
   const board = field.map((val, index) => {
     if ((index + 1) % size === 0) {
       return (
-        <span key={val.id}>
-          <Cell {...val} onClick={() => handleCkickSquare(index)} />
-          <br />
-        </span>
+        <React.Fragment key={val.id}>
+          <Cell
+            key={val.id}
+            {...val}
+            size={size}
+            onClick={() => handleCkickSquare(index)}
+          />
+          <p />
+        </React.Fragment>
       );
     } else {
       return (
-        <span key={val.id}>
-          {<Cell {...val} onClick={() => handleCkickSquare(index)} />}
-        </span>
+        <Cell
+          size={size}
+          key={val.id}
+          {...val}
+          onClick={() => handleCkickSquare(index)}
+        />
       );
     }
   });
 
-  return <Grid item>{board}</Grid>;
+  return (
+    <Grid item>
+      <div>{board}</div>
+    </Grid>
+  );
 }
 
 export default GameField;
