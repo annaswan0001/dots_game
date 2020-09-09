@@ -6,7 +6,7 @@ let array = new Array(10).fill("element");
 export default function Loder() {
 
   return (
-    <div class="loader">
+    <div className="loader">
        {array && array.map((el,i)=>{
          return <span key={i} className="loader-block"></span>
        })}
