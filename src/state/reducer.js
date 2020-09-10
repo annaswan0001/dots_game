@@ -48,26 +48,53 @@ function reducer(state, action) {
       };
     }
     case actionsTypes.CLICK_SQUARE: {
-      if (state.field[action.payload].isBlueSquare){
+      if (state.field[action.payload].isBlueSquare) {
         return {
           ...state,
           field: state.field.map((square, index) =>
             index === action.payload
-              ? 
-                {
+              ? {
                   ...square,
                   isBlueSquare: false,
                   isGreenSquare: true,
                   disabled: true,
                 }
-              : 
-                square
+              : square
           ),
         };
-        
+      } else {
+        return state;
       }
-      else {return state}
-  
+    }
+    case actionsTypes.SET_SQUARE_RED: {
+      return {
+        ...state,
+        field: state.field.map((square) =>
+          square.id === action.payload
+            ? {
+                ...square,
+                isBlueSquare: false,
+                isRedSquare: true,
+                isDisabled: true,
+              }
+            : square
+        ),
+      };
+    }
+    case actionsTypes.SET_SQUARE_BLUE: {
+      return {
+        ...state,
+        field: state.field.map((square) =>
+          square.id === action.payload
+            ? {
+                ...square,
+                isBlueSquare: true,
+                isRedSquare: false,
+                isAvailable: false,
+              }
+            : square
+        ),
+      };
     }
     default: {
       throw new Error();

@@ -19,6 +19,9 @@ import { actionsTypes } from "../../state/actionsTypes";
 //utils
 import { dateFormat } from "../../utils/dateFormat";
 
+
+
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     width: "100%",
@@ -71,7 +74,6 @@ function SettingMode() {
   const [mode, setMode] = useState("");
   const [user, setUserName] = useState("");
 
-
   const {
     settings,
     isGameStart,
@@ -82,8 +84,6 @@ function SettingMode() {
     winner,
   } = state;
 
-  
- 
 
 
   useEffect(() => {
@@ -107,6 +107,9 @@ function SettingMode() {
     }
   }, [size, dispatch]);
 
+
+
+
   useEffect(() => {
     if (isGameStart && isGameFinish) {
       let fieldArray = createField(size);
@@ -114,6 +117,8 @@ function SettingMode() {
       dispatch({ type: actionsTypes.SET_GAME_PERMISSION, payload: "" });
     }
   }, [isGameStart, size, isGameFinish, dispatch]);
+
+
 
   useEffect(() => {
     let interval;
@@ -132,10 +137,11 @@ function SettingMode() {
         );
 
         if (blueSquareArray.length) {
-          let currentSquare = blueSquareArray[0];
-          fieldCopy[currentSquare.id].isBlueSquare = false;
-          fieldCopy[currentSquare.id].isRedSquare = true;
-          fieldCopy[currentSquare.id].isDisabled = true;
+          let currentSquareId = blueSquareArray[0].id;
+          dispatch({
+            type: actionsTypes.SET_SQUARE_RED,
+            payload: currentSquareId,
+          });
         }
         if (greenSquareArray.length === Math.round((size * size) / 2)) {
           clearInterval(gameInterval);
@@ -148,16 +154,14 @@ function SettingMode() {
             const randomIndex = Math.floor(
               Math.random() * availableSquaresArray.length
             );
-            const randomSquare = availableSquaresArray[randomIndex];
-            fieldCopy[randomSquare.id].isBlueSquare = true;
-            fieldCopy[randomSquare.id].isRedSquare = false;
-            fieldCopy[randomSquare.id].isAvailable = false;
+            const randomSquare = availableSquaresArray[randomIndex].id;
+            dispatch({
+              type: actionsTypes.SET_SQUARE_BLUE,
+              payload: randomSquare,
+            });
           }
-
-          dispatch({ type: actionsTypes.SET_FIELD_ARRAY, payload: fieldCopy });
         }
       };
-
       interval = setInterval(gameInterval, delay);
     }
     return () => {
@@ -165,18 +169,22 @@ function SettingMode() {
     };
   }, [isGameStart, isGameFinish, size, dispatch, user, delay, field]);
 
+  
   useEffect(() => {
     if (isGameFinish) {
       let date = dateFormat();
       setWinner(winner, date).then((res) =>
-        dispatch({ type: actionsTypes.SET_WINNERS, payload: res.data })
+        dispatch({
+          type: actionsTypes.SET_WINNERS,
+          payload: res.data.reverse(),
+        })
       );
     }
   }, [isGameFinish, dispatch, winner]);
 
   return (
     <>
-      <Grid item xs={12} sm={6}  lg={4}>
+      <Grid item xs={12} sm={6} lg={4}>
         <FormControl variant="filled" className={classes.formControl}>
           <InputLabel classes={{ root: classes.label }} id="select-mode-label">
             Pick game mode
@@ -199,7 +207,7 @@ function SettingMode() {
           </Select>
         </FormControl>
       </Grid>
-      <Grid xs={12} sm={6}  item lg={4}>
+      <Grid xs={12} sm={6} item lg={4}>
         <FormControl className={classes.formControl}>
           <TextField
             error={user.length >= 10 ? true : false}
@@ -223,7 +231,7 @@ function SettingMode() {
           }}
           color="primary"
           className={classes.button}
-          disabled={!mode || !user || isGameStart || user.length >=10}
+          disabled={!mode || !user || isGameStart || user.length >= 10}
         >
           {isGameFinish ? "Play again" : "Play"}
         </Button>

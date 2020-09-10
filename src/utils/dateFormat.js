@@ -5,6 +5,6 @@
       year: 'numeric',
     };
     let formatDate =date.toLocaleDateString("en-US", options);
-    let customDate =`${date.getHours()}:${ date.getMinutes()}; ${("0" + date.getDate()).slice(-2)} ${formatDate}`
+    let customDate =`${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}; ${("0" + date.getDate()).slice(-2)} ${formatDate}`
     return customDate
 }
