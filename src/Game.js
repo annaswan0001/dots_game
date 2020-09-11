@@ -263,7 +263,7 @@ function Game() {
 
               <Grid item xs={12}>
                 {winner && (
-                  <h3 style={{ textAlign: "center" }}> {winner} win! </h3>
+                  <h3> {winner} win! </h3>
                 )}
               </Grid>
               {GameFieldMemo}
