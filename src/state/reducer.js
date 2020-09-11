@@ -73,7 +73,7 @@ function reducer(state, action) {
                   ...square,
                   isBlueSquare: false,
                   isGreenSquare: true,
-                  disabled: true,
+                  
                 }
               : square
           ),
@@ -91,7 +91,7 @@ function reducer(state, action) {
                 ...square,
                 isBlueSquare: false,
                 isRedSquare: true,
-                isDisabled: true,
+                
               }
             : square
         ),

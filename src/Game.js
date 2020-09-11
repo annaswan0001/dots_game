@@ -42,7 +42,7 @@ const createField = (fieldSize) => {
       isRedSquare: false,
       isBlueSquare: false,
       isAvailable: true,
-      isDisabled: false,
+     
     };
     fieldArr.push(square);
   }
