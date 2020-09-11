@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import {
   Grid,
   InputLabel,
@@ -11,16 +11,9 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import cyan from "@material-ui/core/colors/cyan";
-//api
-import { setWinner } from "../../api/api";
+import PropTypes from 'prop-types'
 //state
-import { GameContext } from "../../state/reducer";
 import { actionsTypes } from "../../state/actionsTypes";
-//utils
-import { dateFormat } from "../../utils/dateFormat";
-
-
-
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -51,136 +44,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const createField = (fieldSize) => {
-  let fieldArr = [];
-  for (let i = 0; i < fieldSize * fieldSize; i++) {
-    let square = {
-      id: i,
-      isGreenSquare: false,
-      isRedSquare: false,
-      isBlueSquare: false,
-      isAvailable: true,
-      isDisabled: false,
-    };
-    fieldArr.push(square);
-  }
-
-  return fieldArr;
-};
-
-function SettingMode() {
+function SettingMode({
+  setGameMode,
+  settings,
+  mode,
+  isGameStart,
+  isGameFinish,
+  user,
+  dispatch,
+}) {
   const classes = useStyles();
-  const { state, dispatch } = useContext(GameContext);
-  const [mode, setMode] = useState("");
-  const [user, setUserName] = useState("");
 
-  const {
-    settings,
-    isGameStart,
-    size,
-    field,
-    delay,
-    isGameFinish,
-    winner,
-  } = state;
-
-
-
-  useEffect(() => {
-    if (mode) {
-      dispatch({
-        type: actionsTypes.SET_FIELD_SIZE,
-        payload: settings[mode].field,
-      });
-      dispatch({
-        type: actionsTypes.SET_GAME_DELAY,
-        payload: settings[mode].delay,
-      });
-      dispatch({ type: actionsTypes.SET_GAME_PERMISSION });
-    }
-  }, [mode, dispatch, settings]);
-
-  useEffect(() => {
-    if (size) {
-      let fieldArray = createField(size);
-      dispatch({ type: actionsTypes.SET_FIELD_ARRAY, payload: fieldArray });
-    }
-  }, [size, dispatch]);
-
-
-
-
-  useEffect(() => {
-    if (isGameStart && isGameFinish) {
-      let fieldArray = createField(size);
-      dispatch({ type: actionsTypes.SET_FIELD_ARRAY, payload: fieldArray });
-      dispatch({ type: actionsTypes.SET_GAME_PERMISSION, payload: "" });
-    }
-  }, [isGameStart, size, isGameFinish, dispatch]);
-
-
-
-  useEffect(() => {
-    let interval;
-    if (isGameStart && !isGameFinish) {
-      let gameInterval = () => {
-        let fieldCopy = [...field];
-        let blueSquareArray = fieldCopy.filter((square) => {
-          return square.isBlueSquare;
-        });
-        let greenSquareArray = fieldCopy.filter(
-          (square) => square.isGreenSquare
-        );
-        let redSquareArray = fieldCopy.filter((square) => square.isRedSquare);
-        let availableSquaresArray = fieldCopy.filter(
-          (square) => square.isAvailable
-        );
-
-        if (blueSquareArray.length) {
-          let currentSquareId = blueSquareArray[0].id;
-          dispatch({
-            type: actionsTypes.SET_SQUARE_RED,
-            payload: currentSquareId,
-          });
-        }
-        if (greenSquareArray.length === Math.round((size * size) / 2)) {
-          clearInterval(gameInterval);
-          dispatch({ type: actionsTypes.FINISH_GAME, payload: user });
-        } else if (redSquareArray.length === Math.round((size * size) / 2)) {
-          clearInterval(gameInterval);
-          dispatch({ type: actionsTypes.FINISH_GAME, payload: "Computer" });
-        } else {
-          if (availableSquaresArray.length) {
-            const randomIndex = Math.floor(
-              Math.random() * availableSquaresArray.length
-            );
-            const randomSquare = availableSquaresArray[randomIndex].id;
-            dispatch({
-              type: actionsTypes.SET_SQUARE_BLUE,
-              payload: randomSquare,
-            });
-          }
-        }
-      };
-      interval = setInterval(gameInterval, delay);
-    }
-    return () => {
-      clearTimeout(interval);
-    };
-  }, [isGameStart, isGameFinish, size, dispatch, user, delay, field]);
-
-  
-  useEffect(() => {
-    if (isGameFinish) {
-      let date = dateFormat();
-      setWinner(winner, date).then((res) =>
-        dispatch({
-          type: actionsTypes.SET_WINNERS,
-          payload: res.data.reverse(),
-        })
-      );
-    }
-  }, [isGameFinish, dispatch, winner]);
 
   return (
     <>
@@ -196,10 +70,10 @@ function SettingMode() {
             value={mode}
             label="Pick game mode"
             disabled={isGameStart}
-            onChange={(e) => setMode(e.target.value)}
+            onChange={(e) => setGameMode(e.target.value)}
           >
-            {state.settings &&
-              Object.keys(state.settings).map((set, i) => (
+            {settings &&
+              Object.keys(settings).map((set, i) => (
                 <MenuItem key={set} value={set}>
                   {set}
                 </MenuItem>
@@ -214,7 +88,9 @@ function SettingMode() {
             size="small"
             label="Enter your name"
             variant="filled"
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) =>
+              dispatch({ type: actionsTypes.SET_USER, payload: e.target.value })
+            }
             disabled={isGameStart}
             value={user}
             helperText="Max 10 length"
@@ -236,11 +112,21 @@ function SettingMode() {
           {isGameFinish ? "Play again" : "Play"}
         </Button>
       </Grid>
-      <Grid item xs={12}>
-        {winner && <h3 style={{ textAlign: "center" }}> {winner} win! </h3>}
-      </Grid>
     </>
   );
 }
+
+SettingMode.propTypes = {
+  setGameMode : PropTypes.func,
+  settings: PropTypes.shape({
+    field: PropTypes.string,
+    delay: PropTypes.number
+  }),
+  mode:PropTypes.string,
+  isGameStart:PropTypes.bool,
+  isGameFinish:PropTypes.bool,
+  user:PropTypes.string,
+  dispatch:PropTypes.func,
+};
 
 export default SettingMode;

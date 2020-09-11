@@ -14,7 +14,7 @@ function LeaderList({ winner }) {
 
 
 LeaderList.propTypes = {
-  winners: PropTypes.string
+  winner: PropTypes.object
 };
 
 export default LeaderList 

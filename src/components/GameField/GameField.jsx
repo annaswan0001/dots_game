@@ -1,15 +1,7 @@
-import React, {
-  useContext,
-  useCallback,
-  useEffect,
-  useState,
-  useMemo,
-} from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-//state
-import { GameContext } from "../../state/reducer";
-import { actionsTypes } from "../../state/actionsTypes";
+import PropTypes from "prop-types";
 //components
 import Cell from "./Cell";
 
@@ -19,9 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GameField() {
-  const { state, dispatch } = useContext(GameContext);
-  const { size, field } = state;
+function GameField({ handleCkickSquare, size, field }) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 576);
   const classes = useStyles();
 
@@ -33,13 +23,6 @@ function GameField() {
     window.addEventListener("resize", updateMedia);
     return () => window.removeEventListener("resize", updateMedia);
   });
-
-  const handleCkickSquare = useCallback(
-    (index) => {
-      dispatch({ type: actionsTypes.CLICK_SQUARE, payload: index });
-    },
-    [dispatch]
-  );
 
   const boardStandart = useMemo(
     () =>
@@ -100,4 +83,9 @@ function GameField() {
   );
 }
 
+GameField.propTypes = {
+  handleCkickSquare: PropTypes.func,
+  size: PropTypes.number,
+  field: PropTypes.arrayOf(PropTypes.object),
+};
 export default GameField;

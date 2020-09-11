@@ -2,7 +2,11 @@ import React from "react";
 import { actionsTypes } from "./actionsTypes";
 
 export const GameContext = React.createContext({
+  isLoading:false, 
+  isError:false,
   settings: null,
+  user:"",
+  mode:"",
   field: [],
   delay: null,
   size: null,
@@ -14,8 +18,20 @@ export const GameContext = React.createContext({
 
 function reducer(state, action) {
   switch (action.type) {
+    case actionsTypes.REQUEST_DATA: {
+      return { ...state, isLoading:true, isError:false};
+    }
+    case actionsTypes.ERROR_DATA: {
+      return { ...state, isError:true, isLoading:false };
+    }
     case actionsTypes.SET_SETTINGS: {
-      return { ...state, settings: action.payload };
+      return { ...state, settings: action.payload.settings, winners:action.payload.winners, isLoading:false };
+    }
+    case actionsTypes.SET_USER: {
+      return { ...state, user: action.payload };
+    }
+    case actionsTypes.SET_MODE: {
+      return { ...state, mode: action.payload, size: state.settings[action.payload].field, delay:state.settings[action.payload].delay };
     }
     case actionsTypes.SET_GAME_DELAY: {
       return { ...state, delay: action.payload };
