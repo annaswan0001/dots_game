@@ -68,8 +68,7 @@ function Game() {
     isLoading,
   } = state;
 
-
-  //initial settings-data for game and leader board
+  //initial settings-data for game andleader board
   useEffect(() => {
     dispatch({ type: actionsTypes.REQUEST_DATA });
     axios
@@ -207,8 +206,7 @@ function Game() {
   }, [isGameFinish, dispatch, winner]);
 
 
-//for all child add UseMemo for preventing unnecessary rerendering
-
+//for all child use UseMemo for preventing unnessary rerendering
   const SettingModeMemo = useMemo(() => {
     return (
       <SettingMode
